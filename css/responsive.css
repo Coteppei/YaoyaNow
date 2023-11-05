@@ -1,0 +1,17 @@
+@media (max-width: 767px) {
+  
+  .product-list li {
+    width: 47%;
+  }
+  .detail-set {
+    display: block;
+  }
+  .SP-detail-text {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .vagetable-name {
+    font-size: 13px;
+    font-weight: bold;
+  }
+}
