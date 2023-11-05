@@ -1,6 +1,5 @@
 <?php
 require_once("common.php");
-session_start();
 
 // ユーザー情報の定義
 $user_id = $_SESSION['user_id'];

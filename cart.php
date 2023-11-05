@@ -1,4 +1,10 @@
 <?php
+session_start();
+// 未ログイン時にアクセスがあった場合、強制的に商品一覧画面に遷移
+if(!isset($_SESSION['user_id']) || !isset($_SESSION['user_name'])){
+    header('Location: ./index.php');
+    exit;
+}
 require_once("./back_end/get_cart_data.php");
 ?>
 
