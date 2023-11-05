@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(isset($_SESSION['error_signUp'])){
+    $error_signUp = $_SESSION['error_signUp'];
+    unset($_SESSION['error_signUp']);
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
     <?php
@@ -11,18 +18,21 @@
 
 <div class="text-center">
         <h1 class="mt-5">アカウント登録</h1>
-        <form method="post" action="./back_end/account_register.php">
+        <p class="action-message mb-2">
+            <?php if(isset($error_signUp)){echo $error_signUp;}?>
+        </p>
+        <form method="post" action="./back_end/account_register.php" onsubmit="return checkSignUp()">
             <div class="mt-5">
                 <label for="username">ユーザー名:</label>
-                <input type="text" name="username" required>
+                <input type="text" id="username" name="username" required>
             </div>
             <div class="mt-4">
                 <label for="password">パスワード:</label>
-                <input type="password" name="password" required>
+                <input type="password" id="password" name="password" required>
             </div>
             <div class="mt-4" style="margin-right: 30px;">
                 <label for="email">メールアドレス:</label>
-                <input type="email" name="email" required>
+                <input type="email" id="email" name="email" required>
             </div>
             <input type="submit" class="btn btn-primary mt-4" name="registerButton" value="登録">
         </form>

@@ -1,7 +1,12 @@
 <?php
-// 購入ボタンを押すと、カートに入っている商品がすべて削除され、履歴テーブルに入る
 require_once("common.php");
 session_start();
+
+// 購入を確定するボタン以外から来た場合はエラー画面に遷移
+if (!isset($_POST['purchaseButton'])) {
+  header('Location: ../error.php');
+  exit;
+}
 
 try {
   if ((isset($_POST['purchaseButton']))) {

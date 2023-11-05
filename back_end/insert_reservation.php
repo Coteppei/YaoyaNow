@@ -2,6 +2,12 @@
 require_once("common.php");
 session_start();
 
+// カートに追加ボタン以外から来た場合はエラー画面に遷移
+if (!isset($_POST['cartButton'])) {
+    header('Location: ../error.php');
+    exit;
+  }
+
 // カートに追加ボタンを押すと作動
 try {
     if (isset($_POST['cartButton'])) {

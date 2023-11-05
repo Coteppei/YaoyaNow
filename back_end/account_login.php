@@ -1,6 +1,14 @@
 <?php
 require_once("common.php");
 session_start();
+
+// 正常に入力データが届いていない場合、エラー画面に遷移
+if(!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['email']) || !isset($_POST['loginButton'])){
+  header('Location: ../error.php');
+  exit;
+}
+
+// ログインボタンを押すと作動
 try {
   if (isset($_POST['loginButton'])) {
     $user_name = $_POST['username'];

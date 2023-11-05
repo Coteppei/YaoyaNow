@@ -2,6 +2,12 @@
 require_once("common.php");
 session_start();
 
+// 削除対象のデータが検知できない場合、エラー画面に遷移
+if(!isset($_POST['cart_id']) || !isset($_POST['deleteButton'])){
+  header('Location: ../error.php');
+  exit;
+}
+
 // 削除ボタンを押すと動作
 try {
   if (isset($_POST['deleteButton'])) {
