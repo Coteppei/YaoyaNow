@@ -38,6 +38,7 @@ require_once("./back_end/get_history_data.php");
                         <img src="./img/<?php if(isset($cartdata['img'])){echo $cartdata['img'] . '?v=' . $version;} ?>" alt="商品画像">
                         <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($cartdata['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
                         <p>¥<?php echo htmlspecialchars($cartdata['price'], ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p class="history-date text-secondary">購入日：<?php echo htmlspecialchars($cartdata['created_at'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
                 </li>
             <?php endforeach; ?>

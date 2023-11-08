@@ -155,8 +155,10 @@ li {
   color: #ff2121;
 }
 
-
-/* 他のスタイルも適用 */
+/* 購入履歴画面 */
+.history-date {
+  font-size: 11px;
+}
 
 /* 共通処理 */
 .bold {

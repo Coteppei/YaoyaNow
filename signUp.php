@@ -1,9 +1,5 @@
 <?php
 session_start();
-if(isset($_SESSION['error_signUp'])){
-    $error_signUp = $_SESSION['error_signUp'];
-    unset($_SESSION['error_signUp']);
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">

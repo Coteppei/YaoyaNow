@@ -3,7 +3,7 @@ require_once("common.php");
 session_start();
 
 // 正常に入力データが届いていない場合、エラー画面に遷移
-if(!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['email']) || !isset($_POST['loginButton'])){
+if (!isset($_POST['username']) || !isset($_POST['password']) || !isset($_POST['email']) || !isset($_POST['loginButton'])) {
   header('Location: ../error.php');
   exit;
 }
@@ -25,11 +25,11 @@ try {
     if ($customer && password_verify($password, $customer['password'])) {
       $_SESSION['user_id'] = $customer['ID'];
       $_SESSION['user_name'] = $customer['user_name'];
-      $_SESSION['login_message'] = 'ログインに成功しました';
+      $_SESSION['action_message'] = 'ログインに成功しました';
       header('Location: ../index.php');
       exit;
     } else {
-      $_SESSION['error_message'] = 'ログインに失敗しました。';
+      $_SESSION['action_message'] = 'ログインに失敗しました。</br>もう一度情報を入力してください';
       header('Location: ../login.php');
       exit;
     }

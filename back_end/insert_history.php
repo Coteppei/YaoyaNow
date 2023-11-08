@@ -19,8 +19,8 @@ try {
     $delete_stmt = $pdo->prepare("DELETE FROM reservation");
     $insert_stmt->execute();
     $delete_stmt->execute();
-    $_SESSION['cart_message'] = "購入を確定しました。";
-    header('Location: ../index.php');
+    $_SESSION['action_message'] = "購入を確定しました。";
+    header('Location: ../history.php');
     exit;
   }
 } catch (PDOException $e) {

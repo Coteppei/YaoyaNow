@@ -14,4 +14,8 @@
     font-size: 13px;
     font-weight: bold;
   }
+  /* 購入履歴画面 */
+  .history-date {
+    font-size: 9px;
+  }
 }

@@ -12,10 +12,6 @@ require_once("./back_end/get_index_data.php");
     include('./front_end_common/header.php');
     ?>
 
-    <p class="action-message mb-2">
-        <?php if(isset($cart_message)){echo $cart_message;}
-            elseif(isset($log_message)){echo $log_message;}?>
-    </p>
     <h1 class="mt-5">商品一覧</h1>
     <div id="top" class="wrapper">
         <ul class="product-list">
