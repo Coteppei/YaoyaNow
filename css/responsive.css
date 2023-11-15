@@ -18,4 +18,9 @@
   .history-date {
     font-size: 9px;
   }
+
+  /* PC画面のみの表示クラスを消す */
+  .PC-display {
+    display: none;
+  }
 }
