@@ -13,6 +13,18 @@ require_once("./back_end/get_index_data.php");
     ?>
 
     <h1 class="mt-5">商品一覧</h1>
+    <form method="GET">
+        <div class="search mt-4">
+            <input type="text" name="search" id="search" class="mr-3" placeholder="商品名、品種で検索">
+            <button type="submit" class="search-button pr-2 pl-2">検索</button>
+        </div>
+    </form>
+    <?php if(isset($_GET['search'])):?>
+        <p class="search-word mt-3">検索ワード：<?php echo $_GET['search'];?></p>
+    <?php endif?>
+    <?php if($total == 0):?>
+        <p class="action-message mt-5">検索がヒットしませんでした。</p>
+    <?php endif?>
     <div id="top" class="wrapper">
         <ul class="product-list">
             <?php foreach ($vegetablesdata as $vegetable): ?>
@@ -23,7 +35,7 @@ require_once("./back_end/get_index_data.php");
                         <p>¥<?php echo htmlspecialchars($vegetable['price'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
                     <?php if(isset($user_name)):?>
-                        <form method="post" action="./back_end/insert_reservation.php">
+                        <form method="POST" action="./back_end/insert_reservation.php">
                             <input type="hidden" name="vegetable_id" value="<?php echo $vegetable['ID']; ?>">
                             <button class="btn btn-primary mb-3" name="cartButton">カートに追加</button>
                         </form>
@@ -32,25 +44,9 @@ require_once("./back_end/get_index_data.php");
             <?php endforeach; ?>
         </ul>
         <!-- ページングの表示 -->
-        <div class="all-pagination">
-            <?php if ($currentPage > 1): ?>
-                <a href="?page=<?php echo $currentPage - 1; ?>" class="PC-display mr-4">≪前のページへ</a>
-                <a href="?page=<?php echo $currentPage - 1; ?>" class="SP-display mr-4">≪前へ</a>
-            <?php endif; ?>
-            <div class="pagination">
-                <?php for ($page = 1; $page <= $total_page; $page++): ?>
-                    <?php if ($page == $currentPage): ?>
-                        <p><?php echo $page; ?></p>
-                    <?php else: ?>
-                        <a href="?page=<?php echo $page; ?>"><?php echo $page; ?></a>
-                    <?php endif; ?>
-                <?php endfor; ?>
-            </div>
-            <?php if ($currentPage < $total_page): ?>
-                <a href="?page=<?php echo $currentPage + 1; ?>" class="PC-display ml-4">次のページへ≫</a>
-                <a href="?page=<?php echo $currentPage + 1; ?>" class="SP-display ml-4">次へ≫</a>
-            <?php endif; ?>
-        </div>
+        <?php
+        include('./front_end_common/pagenation.php');
+        ?> 
     </div>
     <?php
     include('./front_end_common/footer.php');

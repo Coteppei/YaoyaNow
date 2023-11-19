@@ -43,6 +43,10 @@ require_once("./back_end/get_history_data.php");
                 </li>
             <?php endforeach; ?>
         </ul>
+        <!-- ページリンクの表示 -->
+        <?php
+        include('./front_end_common/pagenation.php');
+        ?> 
     </div>
     <?php
     include('./front_end_common/footer.php');

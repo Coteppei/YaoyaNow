@@ -25,7 +25,7 @@ require_once("./back_end/get_cart_data.php");
             <p class="text-danger font-weight-bold">カートに商品がありません</p>
         <?php else:?>
             <p class = "total-price">小計：¥<?php echo $totalPrice?></p>
-            <form action="./back_end/insert_history.php" method="post" onsubmit="return checkPurchase()">
+            <form action="./back_end/insert_history.php" method="POST" onsubmit="return checkPurchase()">
                 <button class="btn btn-primary ml-5" name="purchaseButton">購入を確定する</button>
             </form>
         <?php endif?>
@@ -39,13 +39,17 @@ require_once("./back_end/get_cart_data.php");
                         <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($cartdata['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
                         <p>¥<?php echo htmlspecialchars($cartdata['price'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
-                    <form method="post" action="./back_end/delete_reservation.php" onsubmit="return checkDelete()">
+                    <form method="POST" action="./back_end/delete_reservation.php" onsubmit="return checkDelete()">
                         <input type="hidden" name="cart_id" value="<?php echo $cartdata['cartID']; ?>">
                         <button class="btn btn-primary mb-3" name="deleteButton">カートから削除</button>
                     </form>
                 </li>
             <?php endforeach; ?>
         </ul>
+        <!-- ページリンクの表示 -->
+        <?php
+        include('./front_end_common/pagenation.php');
+        ?> 
     </div>
     <?php
     include('./front_end_common/footer.php');

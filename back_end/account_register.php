@@ -2,7 +2,7 @@
 require_once("common.php");
 session_start();
 // 空文字対策
-$error_letter = "^(\s|　)+$";
+$error_word = "^(\s|　)+$";
 
 // 正常に入力データが届いていない場合、エラー画面に遷移
 if (!isset($_POST['username']) || empty($_POST['username']) || !isset($_POST['password']) || empty($_POST['password']) || !isset($_POST['email']) || empty($_POST['email'])) {
@@ -13,7 +13,7 @@ if (!isset($_POST['username']) || empty($_POST['username']) || !isset($_POST['pa
 // 登録ボタンを押すと作動
 try {
   if (isset($_POST['registerButton'])) {
-    if (mb_ereg_match("^(\s|　)+$", $_POST['username'])) {  // ユーザー名が半角、全角スペースのみでの入力があった場合、登録不可と判定。 
+    if (mb_ereg_match($error_word, $_POST['username'])) {  // ユーザー名が半角、全角スペースのみでの入力があった場合、登録不可と判定。 
       $_SESSION['action_message'] = '空文字では登録できません。';
       header('Location: ../signUp.php');
       exit;
