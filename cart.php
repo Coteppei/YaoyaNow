@@ -21,8 +21,8 @@ require_once("./back_end/get_cart_data.php");
 
     <h1 class="mb-5 mt-5">カート一覧</h1>
     <div class="d-flex justify-content-center text-center">
-        <?php if($totalPrice === 0):?>
-            <p class="text-danger font-weight-bold">カートに商品がありません</p>
+        <?php if($totalPrice === NULL):?>
+            <p class="total-price text-danger font-weight-bold">カートに商品がありません</p>
         <?php else:?>
             <p class = "total-price">小計：¥<?php echo $totalPrice?></p>
             <form action="./back_end/insert_history.php" method="POST" onsubmit="return checkPurchase()">

@@ -12,10 +12,10 @@ $queryTotal =
 "SELECT 
 COUNT(*) AS total
 FROM history AS history
-INNER JOIN customers AS customer
-  ON history.customerID = customer.ID
-INNER JOIN vegetable AS vegetable
-  ON history.vegetableID = vegetable.ID
+  INNER JOIN customers AS customer
+    ON history.customerID = customer.ID
+  INNER JOIN vegetable AS vegetable
+    ON history.vegetableID = vegetable.ID
 WHERE customer.ID = $user_id";
 $stmtTotal = $pdo->prepare($queryTotal);
 $stmtTotal->execute();
@@ -51,7 +51,15 @@ $stmt->execute();
 $cartsdata = $stmt->fetchAll();
 
 // カート内の合計金額を表示
-$totalPrice = 0;
-foreach ($cartsdata as $cartsprice) {
-    $totalPrice += (int)$cartsprice['price'];
-}
+$queryAllPrice = 
+"SELECT SUM(price) AS totalPrice FROM history AS history
+  INNER JOIN customers AS customer
+    ON history.customerID = customer.ID
+  INNER JOIN vegetable AS vegetable
+    ON history.vegetableID = vegetable.ID
+WHERE customer.ID = :user_id";
+$priceStmt = $pdo->prepare($queryAllPrice);
+$priceStmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+$priceStmt->execute();
+$totalPrice = $priceStmt->fetchAll();
+$totalPrice = $totalPrice[0]['totalPrice'];

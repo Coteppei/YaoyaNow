@@ -21,13 +21,11 @@ require_once("./back_end/get_history_data.php");
 
     <h1 class="mb-5 mt-5">購入履歴一覧</h1>
     <div class="d-flex justify-content-center text-center">
-        <?php 
-        if($totalPrice === 0){
-            echo "<p class=\"text-danger font-weight-bold\">購入履歴がありません</p>";
-        }else{
-            echo "<p class = \"total-price\">小計：¥$totalPrice</p>";
-        }
-        ?>
+        <?php if($totalPrice === NULL):?>
+            <p class="total-price text-danger font-weight-bold">購入履歴がありません</p>
+        <?php else:?>
+            <p class = "total-price">小計：¥<?php echo $totalPrice?></p>
+        <?php endif;?>
     </div>
 
     <div id="top" class="wrapper">
