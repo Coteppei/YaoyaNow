@@ -34,7 +34,7 @@ $currentPage = max(1, min($currentPage, $total_page));
 $offset = ($currentPage - 1) * MAX;
 $query = 
 "SELECT 
-  vegetable.ID, vegetable.varieties_name, vegetable.price, vegetable.img, history.created_at
+  vegetable.ID, vegetable.varieties_name, vegetable.price, vegetable.img, history.order_quantity, history.created_at
 FROM history AS history
   INNER JOIN customers AS customer
     ON history.customerID = customer.ID
@@ -52,7 +52,7 @@ $cartsdata = $stmt->fetchAll();
 
 // カート内の合計金額を表示
 $queryAllPrice = 
-"SELECT SUM(price) AS totalPrice FROM history AS history
+"SELECT price, order_quantity FROM history AS history
   INNER JOIN customers AS customer
     ON history.customerID = customer.ID
   INNER JOIN vegetable AS vegetable
@@ -61,5 +61,10 @@ WHERE customer.ID = :user_id";
 $priceStmt = $pdo->prepare($queryAllPrice);
 $priceStmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 $priceStmt->execute();
-$totalPrice = $priceStmt->fetchAll();
-$totalPrice = $totalPrice[0]['totalPrice'];
+$selPrice = $priceStmt->fetchAll();
+
+$totalPrice = 0;
+if($selPrice != NULL) {
+  foreach($selPrice as $price)
+    $totalPrice += $price['price'] * $price['order_quantity'];
+}

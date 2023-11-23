@@ -21,7 +21,7 @@ require_once("./back_end/get_history_data.php");
 
     <h1 class="mb-5 mt-5">購入履歴一覧</h1>
     <div class="d-flex justify-content-center text-center">
-        <?php if($totalPrice === NULL):?>
+        <?php if($totalPrice === 0):?>
             <p class="total-price text-danger font-weight-bold">購入履歴がありません</p>
         <?php else:?>
             <p class = "total-price">小計：¥<?php echo $totalPrice?></p>
@@ -36,6 +36,7 @@ require_once("./back_end/get_history_data.php");
                         <img src="./img/<?php if(isset($cartdata['img'])){echo $cartdata['img'] . '?v=' . $version;} ?>" alt="商品画像">
                         <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($cartdata['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
                         <p>¥<?php echo htmlspecialchars($cartdata['price'], ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p>購入数：<?php echo htmlspecialchars($cartdata['order_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
                         <p class="history-date text-secondary">購入日：<?php echo htmlspecialchars($cartdata['created_at'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
                 </li>

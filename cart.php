@@ -21,7 +21,7 @@ require_once("./back_end/get_cart_data.php");
 
     <h1 class="mb-5 mt-5">カート一覧</h1>
     <div class="d-flex justify-content-center text-center">
-        <?php if($totalPrice === NULL):?>
+        <?php if($totalPrice === 0):?>
             <p class="total-price text-danger font-weight-bold">カートに商品がありません</p>
         <?php else:?>
             <p class = "total-price">小計：¥<?php echo $totalPrice?></p>
@@ -38,6 +38,7 @@ require_once("./back_end/get_cart_data.php");
                         <img src="./img/<?php if(isset($cartdata['img'])){echo $cartdata['img'] . '?v=' . $version;} ?>" alt="商品画像">
                         <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($cartdata['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
                         <p>¥<?php echo htmlspecialchars($cartdata['price'], ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p>購入数：<?php echo htmlspecialchars($cartdata['order_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
                     <form method="POST" action="./back_end/delete_reservation.php" onsubmit="return checkDelete()">
                         <input type="hidden" name="cart_id" value="<?php echo $cartdata['cartID']; ?>">
