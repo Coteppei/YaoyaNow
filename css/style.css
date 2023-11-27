@@ -96,7 +96,6 @@ li {
   text-align: center;
 }
 
-
 .wrapper {
   width: 100%;
   max-width: 1360px;
@@ -135,13 +134,38 @@ li {
   word-wrap: break-word;
 }
 
+.price-display {
+  font-size: 18px;
+}
+
 .action-message {
   color: #ff2121;
   font-size: 25px;
   text-align: center;
 }
 
-/* ページング表示 */
+.count-button {
+  display: flex;
+  justify-content: center;
+}
+
+.detail-count-button {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.count-display-size {
+  font-size: 20px;
+
+}
+
+.count-button-size {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+/* ページネーション表示 */
 .all-pagination {
   display: flex;
   justify-content: center;
@@ -196,6 +220,9 @@ li {
   /* スマホ画面のみの表示クラスを消す */
   .SP-display {
     display: none;
+  }
+  .detail-count-button {
+    margin-left: 20px;
   }
 }
 .detail-text {

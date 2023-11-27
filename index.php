@@ -32,11 +32,17 @@ require_once("./back_end/get_index_data.php");
                     <a href="detail.php?content=<?php echo $vegetable['ID']; ?>">
                         <img src="./img/<?php if(isset($vegetable['img'])){echo $vegetable['img'] . '?v=' . $version;}?>" alt="商品画像">
                         <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($vegetable['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
-                        <p>¥<?php echo htmlspecialchars($vegetable['price'], ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p class="price-display">¥<?php echo htmlspecialchars($vegetable['price'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
                     <?php if(isset($user_name)):?>
                         <form method="POST" action="./back_end/insert_reservation.php">
+                            <div class="count-button mb-3">
+                                <button type="button" class="count-button-size" onclick="decreaseCount(<?php echo $vegetable['ID']; ?>)">-</button>
+                                <span id="buyCount_<?php echo $vegetable['ID']; ?>" class="count-display-size mr-2 ml-2">1</span>
+                                <button type="button" class="count-button-size" onclick="increaseCount(<?php echo $vegetable['ID']; ?>)">+</button>
+                            </div>
                             <input type="hidden" name="vegetable_id" value="<?php echo $vegetable['ID']; ?>">
+                            <input type="hidden" name="buyCount" id="buyCountInput_<?php echo $vegetable['ID']; ?>" value="1">
                             <button class="btn btn-primary mb-3" name="cartButton">カートに追加</button>
                         </form>
                     <?php endif;?>

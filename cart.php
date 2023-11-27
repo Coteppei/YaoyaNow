@@ -38,10 +38,17 @@ require_once("./back_end/get_cart_data.php");
                         <img src="./img/<?php if(isset($cartdata['img'])){echo $cartdata['img'] . '?v=' . $version;} ?>" alt="商品画像">
                         <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($cartdata['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
                         <p>¥<?php echo htmlspecialchars($cartdata['price'], ENT_QUOTES, 'UTF-8'); ?></p>
-                        <p>購入数：<?php echo htmlspecialchars($cartdata['order_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
+                        <p>注文数：<?php echo htmlspecialchars($cartdata['order_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
                     <form method="POST" action="./back_end/delete_reservation.php" onsubmit="return checkDelete()">
+                        <div class="count-button mb-3">
+                            <button type="button" class="count-button-size" onclick="decreaseCount(<?php echo $cartdata['cartID']; ?>)">-</button>
+                            <span id="buyCount_<?php echo $cartdata['cartID']; ?>" class="count-display-size mr-2 ml-2">1</span>
+                            <button type="button" class="count-button-size" onclick="deleteIncreaseCount(<?php echo $cartdata['cartID']; ?>)">+</button>
+                        </div>
                         <input type="hidden" name="cart_id" value="<?php echo $cartdata['cartID']; ?>">
+                        <input type="hidden" name="buyCount" id="buyCountInput_<?php echo $cartdata['cartID']; ?>" value="1">
+                        <input type="hidden" name="orderQuantity" id="orderQuantity_<?php echo $cartdata['cartID']; ?>" value="<?php echo $cartdata['order_quantity']; ?>">
                         <button class="btn btn-primary mb-3" name="deleteButton">カートから削除</button>
                     </form>
                 </li>

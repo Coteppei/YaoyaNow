@@ -23,4 +23,9 @@
   .PC-display {
     display: none;
   }
+
+  .detail-count-button {
+    justify-content: center;
+    margin-left: 10px;
+  }
 }

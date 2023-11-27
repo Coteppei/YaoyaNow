@@ -16,7 +16,16 @@ try {
         } elseif (isset($_SESSION['vegetablesdata'])) {
             $vegetableID = $_SESSION['vegetablesdata'];
         }
-        $orderQuantity = 1;
+
+        // 注文数の入力にてコードインジェクション対策
+        if ($_POST['buyCount'] >= 1 && $_POST['buyCount'] <= 9) {
+            // 1から9個までの入力値を許可して変数定義。
+            $orderQuantity = $_POST['buyCount'];
+        } else {
+            // それ以外の数字と文字列全種は許可しない。
+            header('Location: ../error.php');
+            exit;
+        }       
 
         // 既に登録されたデータの場合、注文個数を更新。
         $checkStmt = $pdo->prepare("SELECT * FROM reservation WHERE customerID = ? AND vegetableID = ?");
@@ -24,18 +33,19 @@ try {
         $existTable = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
         if ($existTable) {
-            // 既に購入した商品がカートに入れられた場合、購入数を更新する。
+            // 既に注文した商品がカートに入れられた場合、購入数を更新する。
             $stmt = $pdo->prepare(
                 "UPDATE reservation SET order_quantity = order_quantity + ?, updated_at = NOW() 
                 WHERE customerID = ? AND vegetableID = ?");
             $stmt->execute([$orderQuantity, $customerID, $vegetableID]);
         } else {
-            // 未購入だった場合、新しく野菜商品レコードを登録。
+            // 注文前だった場合、新しく野菜商品レコードを登録。
             $stmt = $pdo->prepare("INSERT INTO reservation (customerID, vegetableID, order_quantity) VALUES (?, ?, ?)");
             $stmt->execute([$customerID, $vegetableID, $orderQuantity]);
         }
         $_SESSION['action_message'] = "商品をカートに追加しました。";
-        header('Location: ../index.php');
+        // リダイレクト先が元いる場所を指定。
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }
 } catch (PDOException $e) {
