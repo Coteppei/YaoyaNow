@@ -26,3 +26,44 @@ function checkSignUp() {
   return confirmAction(message);
 }
 
+// 購入数の選択
+// -ボタンを押すと数字が減る(最小1まで)
+function decreaseCount(vegetableID) {
+  const countElement = document.getElementById('buyCount_' + vegetableID);
+  const countInput = document.getElementById('buyCountInput_' + vegetableID);
+
+  let count = parseInt(countElement.innerText);
+  if (count > 1) {
+    count--;
+    countElement.innerText = count;
+    countInput.value = count;
+  }
+}
+
+// +ボタンを押すと数字が増える(最大9まで)
+function increaseCount(vegetableID) {
+  const countElement = document.getElementById('buyCount_' + vegetableID);
+  const countInput = document.getElementById('buyCountInput_' + vegetableID);
+
+  let count = parseInt(countElement.innerText);
+  if (count < 9) {
+    count++;
+    countElement.innerText = count;
+    countInput.value = count;
+  }
+}
+
+// カート画面のみ+ボタンを押すと購入数に表示されている数字まで増える
+function deleteIncreaseCount(vegetableID) {
+  const countElement = document.getElementById('buyCount_' + vegetableID);
+  const countInput = document.getElementById('buyCountInput_' + vegetableID);
+  const orderQuantityInput = document.getElementById('orderQuantity_' + vegetableID);
+
+  let count = parseInt(countElement.innerText);
+  const orderQuantity = parseInt(orderQuantityInput.value);
+  if (count < orderQuantity) {
+    count++;
+    countElement.innerText = count;
+    countInput.value = count;
+  }
+}
