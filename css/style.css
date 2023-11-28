@@ -87,6 +87,10 @@ li {
 
 .search-button {
   border-radius: 10%;
+  cursor: pointer;
+}
+.search-button:hover {
+  background-color: #61fc85;
 }
 
 .search-word {
@@ -147,22 +151,24 @@ li {
 .count-button {
   display: flex;
   justify-content: center;
+  touch-action: manipulation;
 }
 
 .detail-count-button {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  touch-action: manipulation;
 }
 .count-display-size {
   font-size: 20px;
-
 }
 
 .count-button-size {
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 /* ページネーション表示 */
@@ -223,6 +229,10 @@ li {
   }
   .detail-count-button {
     margin-left: 20px;
+  }
+  /* PC画面ではマウスを載せたときボタンの色を変える。 */
+  .count-button-size:hover {
+    background-color: rgb(243, 185, 85);
   }
 }
 .detail-text {
