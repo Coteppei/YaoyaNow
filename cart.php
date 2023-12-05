@@ -25,20 +25,44 @@ require_once("./back_end/get_cart_data.php");
             <p class="total-price text-danger font-weight-bold">カートに商品がありません</p>
         <?php else:?>
             <p class = "total-price">小計：¥<?php echo $totalPrice?></p>
-            <form action="./back_end/insert_history.php" method="POST" onsubmit="return checkPurchase()">
-                <button class="btn btn-primary ml-5" name="purchaseButton">購入を確定する</button>
-            </form>
-        <?php endif?>
+            <?php if($buyFlg): ?>
+                <form action="./back_end/insert_history.php" method="POST" onsubmit="return checkPurchase()">
+                    <button class="btn btn-primary ml-5" name="purchaseButton">購入を確定する</button>
+                </form>
+            <?php endif; ?>
+        <?php endif;?>
     </div>
+
     <div id="top" class="wrapper">
         <ul class="product-list">
             <?php foreach ($cartsdata as $cartdata): ?>
                 <li class="hover">
                     <a href="detail.php?content=<?php echo $cartdata['ID']; ?>">
-                        <img src="./img/<?php if(isset($cartdata['img'])){echo $cartdata['img'] . '?v=' . $version;} ?>" alt="商品画像">
-                        <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($cartdata['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
-                        <p>¥<?php echo htmlspecialchars($cartdata['price'], ENT_QUOTES, 'UTF-8'); ?></p>
-                        <p>注文数：<?php echo htmlspecialchars($cartdata['order_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
+                        <div class="stock-alert">
+                            <?php if($cartdata['stock_quantity'] == 0): ?>
+                                <p class="stock-message text-danger">
+                                    在庫がありません。<br>
+                                    カートから削除してください。
+                                </p>
+                                <div class="gray-out">
+                            <?php elseif($cartdata['stock_quantity'] - $cartdata['order_quantity'] < 0): ?>
+                                <p class="stock-message text-danger">
+                                    残り<?php echo $cartdata['stock_quantity']; ?>点です。<br>
+                                    注文数を減らしてください。
+                                </p>
+                                <div class="gray-out">
+                            <?php elseif($cartdata['stock_quantity'] <= 9 && $cartdata['stock_quantity'] > 0): ?>
+                                <p class="stock-message text-danger">残り<?php echo $cartdata['stock_quantity']; ?>点です。</p>
+                                <div>
+                            <?php else: ?>
+                                <div>
+                            <?php endif; ?>
+                                <img src="./img/<?php if(isset($cartdata['img'])){echo $cartdata['img'] . '?v=' . $version;} ?>" alt="商品画像">
+                            </div>
+                        </div>
+                            <p class="vagetable-name"><?php echo nl2br(htmlspecialchars($cartdata['varieties_name'], ENT_QUOTES, 'UTF-8')); ?></p>
+                            <p>¥<?php echo htmlspecialchars($cartdata['price'], ENT_QUOTES, 'UTF-8'); ?></p>
+                            <p>注文数：<?php echo htmlspecialchars($cartdata['order_quantity'], ENT_QUOTES, 'UTF-8'); ?></p>
                     </a>
                     <form method="POST" action="./back_end/delete_reservation.php" onsubmit="return checkDelete()">
                         <div class="count-button mb-3">
@@ -51,7 +75,7 @@ require_once("./back_end/get_cart_data.php");
                         <input type="hidden" name="orderQuantity" id="orderQuantity_<?php echo $cartdata['cartID']; ?>" value="<?php echo $cartdata['order_quantity']; ?>">
                         <button class="btn btn-primary mb-3" name="deleteButton">カートから削除</button>
                     </form>
-                </li>
+                </li>                
             <?php endforeach; ?>
         </ul>
         <!-- ページリンクの表示 -->

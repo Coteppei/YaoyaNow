@@ -133,6 +133,33 @@ li {
   background-color: #eafbfe;
 }
 
+.link-color:hover {
+  color: inherit;
+}
+
+.gray-out img {
+  filter: brightness(50%);
+  vertical-align: top;
+}
+
+.stock-alert {
+  position: relative;
+}
+.stock-alert p {
+  opacity: 0.9;
+  position: absolute;
+  background-color: #fff;
+}
+.stock-message {
+  font-size: 20px;
+  z-index: 1;
+}
+.stock-out-message{
+  font-size: 30px; 
+  z-index: 1;
+}
+
+
 .vagetable-name {
   font-size: 22px;
   word-wrap: break-word;

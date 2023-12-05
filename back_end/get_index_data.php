@@ -33,12 +33,24 @@ $total_page = ceil($total / MAX);
 
 // 現在ページ情報の取得
 $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
 // ページ数が1未満の場合は1に、ページ数が総ページ数を超える場合は総ページ数に制限する
 $currentPage = max(1, min($currentPage, $total_page));
+$offset = ($currentPage - 1) * MAX;
+
+// ログイン時のみカートテーブルから注文数を取得
+if (isset($_SESSION['user_id'])) {
+  // ユーザーの情報定義
+  $user_id = $_SESSION['user_id'];
+
+  // カートテーブルの注文数を取得 
+  $cartQuery = "SELECT vegetableID, order_quantity FROM reservation WHERE customerID = :customerID";
+  $cartStmt = $pdo->prepare($cartQuery);
+  $cartStmt->bindValue(':customerID', $user_id, PDO::PARAM_INT);
+  $cartStmt->execute();  // クエリを実行する
+  $cartOrder = $cartStmt->fetchAll();
+}
 
 // 表示する画像のデータを取得する
-$offset = ($currentPage - 1) * MAX;
 $query = 
 "SELECT * FROM vegetable 
 WHERE types_name LIKE :searchKeyword 

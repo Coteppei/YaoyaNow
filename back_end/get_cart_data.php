@@ -34,7 +34,7 @@ $currentPage = max(1, min($currentPage, $total_page));
 $offset = ($currentPage - 1) * MAX;
 $query =
 "SELECT 
-  vegetable.ID, vegetable.varieties_name, vegetable.price, vegetable.img, reservation.order_quantity, reservation.ID AS cartID
+  vegetable.ID, vegetable.varieties_name, vegetable.price, vegetable.img, vegetable.stock_quantity, reservation.order_quantity, reservation.ID AS cartID
 FROM reservation AS reservation
   INNER JOIN customers AS customer
     ON reservation.customerID = customer.ID
@@ -66,4 +66,14 @@ $totalPrice = 0;
 if($selPrice != NULL) {
   foreach($selPrice as $price)
     $totalPrice += $price['price'] * $price['order_quantity'];
+}
+
+// 野菜の在庫より注文数が多い場合、購入不可にする。
+foreach ($cartsdata as $cartdata) {
+  if($cartdata['stock_quantity'] - $cartdata['order_quantity'] < 0) {
+    $buyFlg = false;
+    break;
+  } else {
+    $buyFlg = true;
+  }
 }

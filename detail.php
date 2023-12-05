@@ -1,6 +1,5 @@
 <?php
 require_once("./back_end/get_datail_data.php");
-session_start();
 $_SESSION['vegetablesdata'] = $vegetablesdata[0]['ID'];
 ?>
 
@@ -40,11 +39,22 @@ $_SESSION['vegetablesdata'] = $vegetablesdata[0]['ID'];
                             <div class="detail-count-button">
                                 <button type="button" class="count-button-size" onclick="decreaseCount(<?php echo $vegetablesdata['0']['ID']; ?>)">-</button>
                                 <span id="buyCount_<?php echo $vegetablesdata['0']['ID']; ?>" class="count-display-size mr-2 ml-2">1</span>
-                                <button type="button" class="count-button-size" onclick="increaseCount(<?php echo $vegetablesdata['0']['ID']; ?>)">+</button>
+                                <?php if($cartOrder != NULL):?>
+                                    <button type="button" class="count-button-size" onclick="increaseCount(<?php echo $vegetablesdata['0']['ID'] ?>, <?php echo $vegetablesdata['0']['stock_quantity'] - $cartOrder['0']['order_quantity']; ?>)">+</button>
+                                <?php else:?>
+                                    <button type="button" class="count-button-size" onclick="increaseCount(<?php echo $vegetablesdata['0']['ID'] ?>, <?php echo $vegetablesdata['0']['stock_quantity']; ?>)">+</button>
+                                <?php endif;?>
                             </div>
                             <input type="hidden" name="vegetable_id" value="<?php echo $vegetablesdata['0']['ID']; ?>">
                             <input type="hidden" name="buyCount" id="buyCountInput_<?php echo $vegetablesdata['0']['ID']; ?>" value="1">
+                            <input type="hidden" name="stock_quantity" value="<?php echo $vegetablesdata['0']["stock_quantity"]; ?>">
+                            <?php if($vegetablesdata['0']["stock_quantity"] <= 0): ?>
+                                <button class="btn mb-3" name="cartButton" disabled>入荷待ちです</button>
+                            <?php elseif ($cartOrder != NULL && $vegetablesdata['0']["stock_quantity"] - $cartOrder['0']['order_quantity'] <= 0): ?>
+                                <button class="btn mb-3" name="cartButton" disabled>入荷待ちです</button>
+                            <?php else: ?>
                             <button class="btn btn-primary ml-2" name="cartButton">カートに追加</button>
+                            <?php endif; ?>
                         </form>
                     <?php endif;?>
                     <h2 class="mt-5">商品の説明</h2>

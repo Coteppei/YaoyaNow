@@ -29,11 +29,12 @@ function checkSignUp() {
 // 購入数の選択
 // -ボタンを押すと数字が減る(最小1まで)
 function decreaseCount(vegetableID) {
-  const countElement = document.getElementById('buyCount_' + vegetableID);
+  const countElement = document.getElementById('buyCount_' + vegetableID);      // 
   const countInput = document.getElementById('buyCountInput_' + vegetableID);
+  const maxCount = 1;
 
   let count = parseInt(countElement.innerText);
-  if (count > 1) {
+  if (count > maxCount) {
     count--;
     countElement.innerText = count;
     countInput.value = count;
@@ -41,12 +42,13 @@ function decreaseCount(vegetableID) {
 }
 
 // +ボタンを押すと数字が増える(最大9まで)
-function increaseCount(vegetableID) {
+function increaseCount(vegetableID, stockQuantity) {
   const countElement = document.getElementById('buyCount_' + vegetableID);
   const countInput = document.getElementById('buyCountInput_' + vegetableID);
+  const maxCount = 9;
 
   let count = parseInt(countElement.innerText);
-  if (count < 9) {
+  if (count < stockQuantity && count < maxCount) {
     count++;
     countElement.innerText = count;
     countInput.value = count;
